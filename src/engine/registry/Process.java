@@ -8,7 +8,7 @@ public class Process {
 
     private int entity;
 
-    transient private ConsumerStack<EntityRegistry> resetStack = new ConsumerStack<>();
+    transient private ConsumerStack<Registry> resetStack = new ConsumerStack<>();
 
     transient protected Component requestComponent;
 
@@ -16,13 +16,13 @@ public class Process {
         resetStack = new ConsumerStack<>();
     }
 
-    protected void pushResetCallBack(Consumer<EntityRegistry> resetConsumer) {
+    protected void pushResetCallBack(Consumer<Registry> resetConsumer) {
         resetStack.pushToStack(resetConsumer);
     }
 
-    public void reset(EntityRegistry entityRegistry) {
+    public void reset(Registry entityRegistry) {
         if (resetStack == null)
-            resetStack = new ConsumerStack<EntityRegistry>();
+            resetStack = new ConsumerStack<Registry>();
         resetStack.onAccept(entityRegistry);
     }
 

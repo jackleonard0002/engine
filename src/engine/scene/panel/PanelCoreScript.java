@@ -1,6 +1,6 @@
 package engine.scene.panel;
 
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.comp.MouseInputComp;
 import engine.registry.comp.script.Script;
 import engine.registry.render.Renderer;
@@ -15,18 +15,18 @@ public class PanelCoreScript extends Script {
     }
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
-        onLoad(entityRegistry);
+    public void onReset(Registry registry) {
+        onLoad(registry);
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
-        RectComp rect = entityRegistry.addComponent(getEntity(), RectComp.class);
+    public void onLoad(Registry registry) {
+        RectComp rect = registry.addComponent(getEntity(), RectComp.class);
         // RectRenderer renderer = rect.getRenderer();
         RectRenderConfig renderConfig = rect.getRectRenderConfig();
         renderConfig.setFlags(Renderer.FLAG_FOLLOWING | Renderer.FLAG_FOLLOW_ALL
                 | Renderer.FLAG_LAYOUT_GRID);
-        entityRegistry.addComponent(getEntity(), MouseInputComp.class);
+        registry.addComponent(getEntity(), MouseInputComp.class);
         // entityRegistry.addComponent(panel, PanelKeyInputComp.class);
         // ScriptableComp scriptableComp = entityRegistry.addComponent(getEntity(),
         // ScriptableComp.class);

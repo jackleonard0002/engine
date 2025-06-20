@@ -1,7 +1,6 @@
 package engine.registry.comp;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
 import engine.registry.Registry;
 import engine.util.Transform;
 
@@ -29,5 +28,5 @@ public class TransformComp extends Component {
     @Override
     public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
-    }í
+    }
 }

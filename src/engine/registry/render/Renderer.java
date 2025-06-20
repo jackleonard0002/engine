@@ -147,7 +147,7 @@ public abstract class Renderer<T extends RenderConfig> extends engine.registry.P
             return;
 
         for (int child : containerEntities) {
-            HasRenderer<?> hasRenderer = containerComp.getEntityRegistry().getComponentWithInterface(child,
+            HasRenderer<?> hasRenderer = containerComp.getRegistry().getComponentWithInterface(child,
                     HasRenderer.class);
             if (hasRenderer == null)
                 continue;
@@ -292,7 +292,7 @@ public abstract class Renderer<T extends RenderConfig> extends engine.registry.P
         if (containerEntities == null)
             return;
         for (int child : containerEntities) {
-            HasRenderer<?> hasRenderer = containerComp.getEntityRegistry().getComponentWithInterface(child,
+            HasRenderer<?> hasRenderer = containerComp.getRegistry().getComponentWithInterface(child,
                     HasRenderer.class);
             if (hasRenderer == null)
                 continue;

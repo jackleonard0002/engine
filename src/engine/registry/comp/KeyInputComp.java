@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
 import engine.registry.Registry;
 import engine.scene.AutoInstantiate;
 import engine.util.Logger;

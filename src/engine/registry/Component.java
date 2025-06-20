@@ -45,7 +45,7 @@ public abstract class Component implements java.io.Serializable {
      * 
      * @param entityRegistry
      */
-    public abstract void onReset(EntityRegistry entityRegistry);
+    public abstract void onReset(Registry registry);
 
     /**
      * Get called when entity is destroyed.
@@ -59,7 +59,7 @@ public abstract class Component implements java.io.Serializable {
      * 
      * @param entityRegistry
      */
-    public abstract void onLoad(EntityRegistry entityRegistry);
+    public abstract void onLoad(Registry registry);
 
     /**
      * Gets called when instance is being unloaded from file
@@ -71,6 +71,6 @@ public abstract class Component implements java.io.Serializable {
      * 
      * @param entityRegistry
      */
-    public abstract void onUnload(EntityRegistry entityRegistry);
+    public abstract void onUnload(Registry registry);
 
 }

@@ -1,6 +1,6 @@
 package engine.registry.comp.script;
 
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 
 public abstract class Script implements java.io.Serializable {
 
@@ -8,9 +8,9 @@ public abstract class Script implements java.io.Serializable {
 
     abstract public void onTick(float deltaT);
 
-    abstract public void onReset(EntityRegistry entityRegistry);
+    abstract public void onReset(Registry entityRegistry);
 
-    abstract public void onLoad(EntityRegistry entityRegistry);
+    abstract public void onLoad(Registry entityRegistry);
 
     public int getEntity() {
         return entity;

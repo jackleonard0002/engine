@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import engine.registries.Component;
-import engine.registries.Registry;
 import engine.scene.Scene;
 import engine.util.gfx.Assets;
 
@@ -29,8 +27,7 @@ public class Application {
 
     public void initialize() {
         Scene.createScene();
-        Registry<Component> components = new Registry<>();
-
+        // Registry<Component> components = new Registry<>();
     }
 
     public void run() {

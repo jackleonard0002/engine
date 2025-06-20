@@ -1,7 +1,7 @@
 package engine.registry.render.buff.image;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.render.HasRenderer;
 
 public class ImageComp extends Component implements HasRenderer<ImageRenderer> {
@@ -10,24 +10,24 @@ public class ImageComp extends Component implements HasRenderer<ImageRenderer> {
     private ImageRendererConfig imageRenderConfig = new ImageRendererConfig();
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
+    public void onReset(Registry registry) {
         renderer = new ImageRenderer();
         renderer.setEntity(getEntity());
-        renderer.reset(entityRegistry);
+        renderer.reset(registry);
         renderer.setRenderConfig(imageRenderConfig);
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
+    public void onLoad(Registry registry) {
         renderer = new ImageRenderer();
         renderer.setEntity(getEntity());
-        renderer.reset(entityRegistry);
+        renderer.reset(registry);
         renderer.setRenderConfig(imageRenderConfig);
         renderer.interFun();
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
     }
 

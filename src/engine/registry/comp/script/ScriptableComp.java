@@ -2,7 +2,7 @@ package engine.registry.comp.script;
 
 import java.util.HashSet;
 
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.util.Logger;
 
 public class ScriptableComp extends engine.registry.Component {
@@ -14,25 +14,25 @@ public class ScriptableComp extends engine.registry.Component {
     }
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
+    public void onReset(Registry registry) {
         // scripts.clear();
         scripts.forEach(s -> s.setEntity(getEntity()));
         for (Script script : new HashSet<>(scripts)) {
-            script.onReset(entityRegistry);
+            script.onReset(registry);
         }
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
+    public void onLoad(Registry registry) {
         Logger.log(Logger.EXOT, "getEntity(): " + getEntity());
         scripts.forEach(s -> s.setEntity(getEntity()));
         for (Script script : new HashSet<>(scripts)) {
-            script.onLoad(entityRegistry);
+            script.onLoad(registry);
         }
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
     }
 

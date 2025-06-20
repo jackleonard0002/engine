@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 
 import engine.registry.Component;
 import engine.registry.ComponentAdapter;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.comp.BoundsComp;
 import engine.registry.comp.Container;
 import engine.registry.comp.KeyInputComp;
@@ -104,7 +104,7 @@ public class Scene implements Serializable {
         builder.registerTypeAdapter(Script.class, new ScriptAdapter(gson));
         gson = builder.setPrettyPrinting().enableComplexMapKeySerialization().create();
         try (FileWriter writer = new FileWriter(filepath)) {
-            liveScene.entityRegistry.unloadALLComponents();
+            liveScene.registry.unloadALLComponents();
             gson.toJson(liveScene, writer);
             Logger.log(Logger.CYA, " (W) Sucessfully Wrote to " + filepath);
         } catch (IOException e) {
@@ -138,11 +138,11 @@ public class Scene implements Serializable {
     }
 
     public static void swapScenes(Scene scene) {
-        scene.entityRegistry.loadALLComponents();
+        scene.registry.loadALLComponents();
         // liveScene.isRender = false;s
-        BoundsComp rootBounds = scene.entityRegistry.addComponent(1, BoundsComp.class);
+        BoundsComp rootBounds = scene.registry.addComponent(1, BoundsComp.class);
         // br.setImageID("blue");
-        ImageComp br = scene.entityRegistry.requestComponentFrom(1, ImageComp.class, null);
+        ImageComp br = scene.registry.requestComponentFrom(1, ImageComp.class, null);
         br.getRenderer().getRenderConfig().setImageID("blue");
 
         getCover().addComponentListener(new ComponentListener() {
@@ -172,24 +172,24 @@ public class Scene implements Serializable {
             }
 
         });
-        getCover().addMouseMotionListener(scene.entityRegistry.requestComponentFrom(1, MouseInputComp.class, null));
-        getCover().addKeyListener(scene.entityRegistry.requestComponentFrom(1, KeyInputComp.class, null));
+        getCover().addMouseMotionListener(scene.registry.requestComponentFrom(1, MouseInputComp.class, null));
+        getCover().addKeyListener(scene.registry.requestComponentFrom(1, KeyInputComp.class, null));
         liveScene = scene;
         // liveScene.isRender = true;
     }
 
-    private EntityRegistry entityRegistry = new EntityRegistry();
+    private Registry registry = new Registry();
     private HashMap<String, Script> scriptRegistry = new HashMap<>();
     transient private int rootEntity;
     private boolean isRender = true;
 
     public void initialize() {
         scriptRegistry.put("PanelScript", new PanelCoreScript());
-        rootEntity = entityRegistry.createEntity();
-        entityRegistry.addComponent(rootEntity, BoundsComp.class);
-        entityRegistry.addComponent(rootEntity, MouseInputComp.class);
-        entityRegistry.addComponent(rootEntity, KeyInputComp.class);
-        ImageComp br = entityRegistry.addComponent(rootEntity, ImageComp.class);
+        rootEntity = registry.createEntity();
+        registry.addComponent(rootEntity, BoundsComp.class);
+        registry.addComponent(rootEntity, MouseInputComp.class);
+        registry.addComponent(rootEntity, KeyInputComp.class);
+        ImageComp br = registry.addComponent(rootEntity, ImageComp.class);
         ImageRenderer ir = br.getRenderer();
         ir.getRenderConfig().setImageID("blue");
         ir.getRenderConfig().setStretchImage(true);
@@ -197,9 +197,9 @@ public class Scene implements Serializable {
                 .setFlags(Renderer.FLAG_FOLLOWING |
                         Renderer.FLAG_FOLLOW_ALL | Renderer.FLAG_LAYOUT_GRID);
 
-        int button = entityRegistry.createEntity();
-        entityRegistry.addComponent(button, ButtonComp.class);
-        ImageComp bufferedRenderComp2 = entityRegistry.getComponent(button, ImageComp.class);
+        int button = registry.createEntity();
+        registry.addComponent(button, ButtonComp.class);
+        ImageComp bufferedRenderComp2 = registry.getComponent(button, ImageComp.class);
         ImageRenderer renderer1 = bufferedRenderComp2.getRenderer();
         RenderConfig renderConfig1 = renderer1.getRenderConfig();
         bufferedRenderComp2.getRenderer().getRenderConfig().setFlags(
@@ -211,9 +211,9 @@ public class Scene implements Serializable {
         renderConfig1.setLayoutCol(5);
         renderConfig1.setLayoutRow(0);
 
-        int button2 = entityRegistry.createEntity();
-        entityRegistry.addComponent(button2, ButtonComp.class);
-        ImageComp bufferedRenderComp3 = entityRegistry.getComponent(button2, ImageComp.class);
+        int button2 = registry.createEntity();
+        registry.addComponent(button2, ButtonComp.class);
+        ImageComp bufferedRenderComp3 = registry.getComponent(button2, ImageComp.class);
         ImageRenderer renderer3 = bufferedRenderComp3.getRenderer();
         RenderConfig renderConfig3 = renderer3.getRenderConfig();
         bufferedRenderComp2.getRenderer().getRenderConfig().setFlags(
@@ -224,9 +224,9 @@ public class Scene implements Serializable {
         renderConfig3.setLayoutCol(4);
         renderConfig3.setLayoutRow(0);
 
-        int button3 = entityRegistry.createEntity();
-        entityRegistry.addComponent(button3, ButtonComp.class);
-        ImageComp bufferedRenderComp4 = entityRegistry.getComponent(button3, ImageComp.class);
+        int button3 = registry.createEntity();
+        registry.addComponent(button3, ButtonComp.class);
+        ImageComp bufferedRenderComp4 = registry.getComponent(button3, ImageComp.class);
         ImageRenderer renderer4 = bufferedRenderComp4.getRenderer();
         RenderConfig renderConfig4 = renderer4.getRenderConfig();
         bufferedRenderComp4.getRenderer().getRenderConfig().setFlags(
@@ -237,13 +237,13 @@ public class Scene implements Serializable {
         renderConfig4.setLayoutCol(3);
         renderConfig4.setLayoutRow(0);
 
-        int panel = entityRegistry.createEntity();
-        RectComp rect = entityRegistry.addComponent(panel, RectComp.class);
+        int panel = registry.createEntity();
+        RectComp rect = registry.addComponent(panel, RectComp.class);
         RectRenderer renderer = rect.getRenderer();
         RenderConfig renderConfig = renderer.getRenderConfig();
         renderConfig.setFlags(Renderer.FLAG_FOLLOWING | Renderer.FLAG_FOLLOW_ALL
                 | Renderer.FLAG_LAYOUT_GRID);
-        entityRegistry.addComponent(panel, MouseInputComp.class);
+        registry.addComponent(panel, MouseInputComp.class);
         // entityRegistry.addComponent(panel, PanelKeyInputComp.class);
         // ScriptableComp scriptableComp = entityRegistry.addComponent(panel,
         // ScriptableComp.class);
@@ -261,22 +261,22 @@ public class Scene implements Serializable {
         // int panelEntiy = createPanel();
         // rootContainer.addChild(panelEntiy);
 
-        int panelCore = entityRegistry.createEntity();
-        ScriptableComp coreScriptable = entityRegistry.addComponent(panelCore, ScriptableComp.class);
+        int panelCore = registry.createEntity();
+        ScriptableComp coreScriptable = registry.addComponent(panelCore, ScriptableComp.class);
         coreScriptable.addScript(new PanelCoreScript());
 
-        Container rootContainer = entityRegistry.getComponent(rootEntity, Container.class);
+        Container rootContainer = registry.getComponent(rootEntity, Container.class);
         // rootContainer.addChild(panelCore);
 
-        int batchRenderTest = entityRegistry.createEntity();
-        BatchRenderComp batchRenderComp = entityRegistry.addComponent(batchRenderTest, BatchRenderComp.class);
+        int batchRenderTest = registry.createEntity();
+        BatchRenderComp batchRenderComp = registry.addComponent(batchRenderTest, BatchRenderComp.class);
         batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(1, 1), new RenderBatch("Big_Del_Button_G"));
         batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(2, 1), new RenderBatch("Big_Del_Button_G"));
         batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(2, 2), new RenderBatch("Big_Del_Button_G"));
         batchRenderComp.getRenderer().bake();
 
-        int panelTest = entityRegistry.createEntity();
-        entityRegistry.addComponent(panelTest, PanelCoreComp.class);
+        int panelTest = registry.createEntity();
+        registry.addComponent(panelTest, PanelCoreComp.class);
 
         rootContainer.putChild("batchRenderTest", batchRenderTest);
         rootContainer.putChild("panelCoreComp", panelTest);
@@ -295,11 +295,11 @@ public class Scene implements Serializable {
 
     public void onRender(Graphics2D g2d) {
         if (isRender) {
-            onRenderEntityTree(g2d, entityRegistry, 1, 0);
+            onRenderEntityTree(g2d, registry, 1, 0);
         }
     }
 
-    private void onRenderEntityTree(Graphics2D g2d, EntityRegistry entityRegistry, int entity, int depth) {
+    private void onRenderEntityTree(Graphics2D g2d, Registry entityRegistry, int entity, int depth) {
         // Logger.log("Render Tree Depth: " + ++depth);
         HasRenderer<?> hasRenderer = entityRegistry.getComponentWithInterface(entity, HasRenderer.class);
         if (hasRenderer == null)
@@ -315,14 +315,14 @@ public class Scene implements Serializable {
         g2d.setTransform(at);
     }
 
-    public EntityRegistry getEntityRegistry() {
-        return entityRegistry;
+    public Registry getRegistry() {
+        return registry;
     }
 
     public int createPanel() {
-        int button = entityRegistry.createEntity();
-        entityRegistry.addComponent(button, ButtonComp.class);
-        ImageComp bufferedRenderComp2 = entityRegistry.getComponent(button, ImageComp.class);
+        int button = registry.createEntity();
+        registry.addComponent(button, ButtonComp.class);
+        ImageComp bufferedRenderComp2 = registry.getComponent(button, ImageComp.class);
         ImageRenderer renderer1 = bufferedRenderComp2.getRenderer();
         RenderConfig renderConfig1 = renderer1.getRenderConfig();
         bufferedRenderComp2.getRenderer().getRenderConfig().setFlags(
@@ -334,9 +334,9 @@ public class Scene implements Serializable {
         renderConfig1.setLayoutCol(5);
         renderConfig1.setLayoutRow(0);
 
-        int button2 = entityRegistry.createEntity();
-        entityRegistry.addComponent(button2, ButtonComp.class);
-        ImageComp bufferedRenderComp3 = entityRegistry.getComponent(button2, ImageComp.class);
+        int button2 = registry.createEntity();
+        registry.addComponent(button2, ButtonComp.class);
+        ImageComp bufferedRenderComp3 = registry.getComponent(button2, ImageComp.class);
         ImageRenderer renderer3 = bufferedRenderComp3.getRenderer();
         RenderConfig renderConfig3 = renderer3.getRenderConfig();
         bufferedRenderComp2.getRenderer().getRenderConfig().setFlags(
@@ -347,9 +347,9 @@ public class Scene implements Serializable {
         renderConfig3.setLayoutCol(4);
         renderConfig3.setLayoutRow(0);
 
-        int button3 = entityRegistry.createEntity();
-        entityRegistry.addComponent(button3, ButtonComp.class);
-        ImageComp bufferedRenderComp4 = entityRegistry.getComponent(button3, ImageComp.class);
+        int button3 = registry.createEntity();
+        registry.addComponent(button3, ButtonComp.class);
+        ImageComp bufferedRenderComp4 = registry.getComponent(button3, ImageComp.class);
         ImageRenderer renderer4 = bufferedRenderComp4.getRenderer();
         RenderConfig renderConfig4 = renderer4.getRenderConfig();
         bufferedRenderComp4.getRenderer().getRenderConfig().setFlags(
@@ -360,15 +360,15 @@ public class Scene implements Serializable {
         renderConfig4.setLayoutCol(3);
         renderConfig4.setLayoutRow(0);
 
-        int panel = entityRegistry.createEntity();
-        RectComp rect = entityRegistry.addComponent(panel, RectComp.class);
+        int panel = registry.createEntity();
+        RectComp rect = registry.addComponent(panel, RectComp.class);
         RectRenderer renderer = rect.getRenderer();
         RenderConfig renderConfig = renderer.getRenderConfig();
         renderConfig.setFlags(Renderer.FLAG_FOLLOWING | Renderer.FLAG_FOLLOW_ALL
                 | Renderer.FLAG_LAYOUT_GRID);
-        entityRegistry.addComponent(panel, MouseInputComp.class);
+        registry.addComponent(panel, MouseInputComp.class);
         // entityRegistry.addComponent(panel, PanelKeyInputComp.class);
-        ScriptableComp scriptableComp = entityRegistry.addComponent(panel, ScriptableComp.class);
+        ScriptableComp scriptableComp = registry.addComponent(panel, ScriptableComp.class);
         scriptableComp.addScript(new PanelCoreScript());
         renderConfig.setLayoutColNum(3);
         renderConfig.setLayoutRowNum(3);

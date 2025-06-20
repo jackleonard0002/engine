@@ -8,13 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.comp.MouseInputComp;
 import engine.registry.render.buff.image.ImageComp;
 import engine.registry.render.buff.image.ImageRenderer;
 import engine.registry.render.buff.image.ImageRendererConfig;
 import engine.scene.AutoInstantiate;
-import engine.util.Logger;
 
 public class ButtonComp extends Component {
 
@@ -51,18 +50,18 @@ public class ButtonComp extends Component {
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
-        onReset(entityRegistry);
+    public void onLoad(Registry registry) {
+        onReset(registry);
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
-        imageComp = entityRegistry.requestComponentFrom(getEntity(), ImageComp.class, this);
+    public void onReset(Registry registry) {
+        imageComp = registry.requestComponentFrom(getEntity(), ImageComp.class, this);
         imageRenderer = imageComp.getRenderer();
         if (imageRenderer != null) {
             // Logger.log("First Class: " +
@@ -72,7 +71,7 @@ public class ButtonComp extends Component {
                 // Logger.log("Second Class: " + imageRendererConfig.getClass().getName());
             }
         }
-        mouseInputComp = entityRegistry.requestComponentFrom(getEntity(), MouseInputComp.class, this);
+        mouseInputComp = registry.requestComponentFrom(getEntity(), MouseInputComp.class, this);
         mouseInputComp.activation = active -> {
             if (!active) {
                 // Logger.LOG("deactivivation????");

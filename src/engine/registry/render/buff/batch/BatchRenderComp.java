@@ -1,7 +1,7 @@
 package engine.registry.render.buff.batch;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.render.HasRenderer;
 
 public final class BatchRenderComp extends Component implements HasRenderer<BatchRenderer> {
@@ -14,23 +14,23 @@ public final class BatchRenderComp extends Component implements HasRenderer<Batc
     }
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
+    public void onReset(Registry registry) {
         batchRenderer = new BatchRenderer();
         batchRenderer.setEntity(getEntity());
-        batchRenderer.reset(entityRegistry);
+        batchRenderer.reset(registry);
         batchRenderer.setRenderConfig(batchRenderConfig);
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
+    public void onLoad(Registry registry) {
         batchRenderer = new BatchRenderer();
         batchRenderer.setEntity(getEntity());
-        batchRenderer.reset(entityRegistry);
+        batchRenderer.reset(registry);
         batchRenderer.setRenderConfig(batchRenderConfig);
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
     }
 

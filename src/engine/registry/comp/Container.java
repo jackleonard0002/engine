@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
 import engine.registry.Registry;
 import engine.scene.AutoInstantiate;
 import engine.util.EventListener;

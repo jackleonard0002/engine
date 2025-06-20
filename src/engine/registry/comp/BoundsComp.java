@@ -1,7 +1,7 @@
 package engine.registry.comp;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.util.Bounds;
 
 public class BoundsComp extends Component {
@@ -14,7 +14,7 @@ public class BoundsComp extends Component {
 
     @Override
     public void onReset(Registry registry) {
-        // bounds = new Bounds();s
+        // bounds = new Bounds();
     }
 
     @Override

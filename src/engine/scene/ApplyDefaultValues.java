@@ -17,6 +17,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import engine.registry.Component;
+import engine.registry.EntityMaterial;
 import engine.registry.comp.BoundsComp;
 import engine.registry.comp.TransformComp;
 import engine.util.Logger;
@@ -26,8 +27,8 @@ public class ApplyDefaultValues {
     private static Logger logger = new Logger(ApplyDefaultValues.class, false);
 
     public static void AutoInit(Scene scene) {
-        for (HashSet<Component> comps : scene.getEntityRegistry().getRegistry().values()) {
-            for (Component comp : comps) {
+        for (EntityMaterial em : scene.getRegistry().getEntityMap().values()) {
+            for (Component comp : em.getComponents()) {
                 if (comp instanceof BoundsComp boundsComp) {
                     instantiateEmptyFields(boundsComp.getBounds());
                 }

@@ -1,7 +1,7 @@
 package engine.registry.render.raw;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.render.HasRenderer;
 
 /**
@@ -23,23 +23,23 @@ public class RawRenderComp extends Component implements HasRenderer<RawRenderer>
     }
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
+    public void onReset(Registry registry) {
         rawRenderer = new RawRenderer();
         rawRenderer.setEntity(getEntity());
-        rawRenderer.reset(entityRegistry);
+        rawRenderer.reset(registry);
         rawRenderer.setRenderConfig(rawRenderConfig);
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
+    public void onLoad(Registry registry) {
         rawRenderer = new RawRenderer();
         rawRenderer.setEntity(getEntity());
-        rawRenderer.reset(entityRegistry);
+        rawRenderer.reset(registry);
         rawRenderer.setRenderConfig(rawRenderConfig);
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
     }
 

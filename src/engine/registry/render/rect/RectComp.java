@@ -1,7 +1,7 @@
 package engine.registry.render.rect;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.render.HasRenderer;
 
 public class RectComp extends Component implements HasRenderer<RectRenderer> {
@@ -14,24 +14,24 @@ public class RectComp extends Component implements HasRenderer<RectRenderer> {
     }
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
+    public void onReset(Registry registry) {
         rectRenderer = new RectRenderer();
         rectRenderer.setEntity(getEntity());
-        rectRenderer.reset(entityRegistry);
+        rectRenderer.reset(registry);
         rectRenderer.setRenderConfig(rectRenderConfig);
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
+    public void onLoad(Registry registry) {
         rectRenderer = new RectRenderer();
         rectRenderer.setEntity(getEntity());
-        rectRenderer.reset(entityRegistry);
+        rectRenderer.reset(registry);
         rectRenderer.setRenderConfig(rectRenderConfig);
 
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry registry) {
         // TODO Auto-generated method stub
     }
 

@@ -3,7 +3,7 @@ package engine.registry.comp.gui.panel;
 import java.awt.Color;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
+import engine.registry.Registry;
 import engine.registry.comp.MouseInputComp;
 import engine.registry.render.Renderer;
 import engine.registry.render.rect.RectComp;
@@ -14,12 +14,12 @@ public class PanelCoreComp extends Component {
     private int i;
 
     @Override
-    public void onReset(EntityRegistry entityRegistry) {
+    public void onReset(Registry entityRegistry) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void onLoad(EntityRegistry entityRegistry) {
+    public void onLoad(Registry entityRegistry) {
         RectComp rect = entityRegistry.addComponent(getEntity(), RectComp.class);
         rect.getRectRenderConfig().setRectColor(Color.MAGENTA.getRGB());
         // RectRenderer renderer = rect.getRenderer();
@@ -41,7 +41,7 @@ public class PanelCoreComp extends Component {
     }
 
     @Override
-    public void onUnload(EntityRegistry entityRegistry) {
+    public void onUnload(Registry entityRegistry) {
         entityRegistry.destroyEntity(i);
     }
 

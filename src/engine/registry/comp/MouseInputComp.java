@@ -12,7 +12,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import engine.registry.Component;
-import engine.registry.EntityRegistry;
 import engine.registry.Registry;
 import engine.scene.AutoInstantiate;
 
@@ -136,7 +135,7 @@ public class MouseInputComp extends Component implements MouseMotionListener,
     // Helper method
     private <E extends InputEvent> void propagateToComponents(E event, BiConsumer<MouseInputComp, E> handler) {
         for (int entity : containerX) {
-            MouseInputComp comp = container.getEntityRegistry().getComponent(entity, MouseInputComp.class);
+            MouseInputComp comp = container.getRegistry().getComponent(entity, MouseInputComp.class);
             if (comp != null) {
                 handler.accept(comp, event);
             }
