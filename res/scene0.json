@@ -1,0 +1,565 @@
+{
+  "entityRegistry": {
+    "entityIdGenerator": 8,
+    "registry": {
+      "1": [
+        {
+          "class": "engine.registry.comp.MouseInputComp",
+          "data": {
+            "entity": 1
+          }
+        },
+        {
+          "class": "engine.registry.comp.Container",
+          "data": {
+            "childMap": {
+              "batchRenderTest": 7,
+              "panelCoreComp": 8
+            },
+            "parent": 0,
+            "entity": 1
+          }
+        },
+        {
+          "class": "engine.registry.render.buff.image.ImageComp",
+          "data": {
+            "imageRenderConfig": {
+              "stretchImage": true,
+              "imageID": "blue",
+              "flags": 1000,
+              "layoutColNum": 2,
+              "layoutRowNum": 2,
+              "layoutCol": 1,
+              "layoutRow": 1
+            },
+            "entity": 1
+          }
+        },
+        {
+          "class": "engine.registry.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 1
+          }
+        },
+        {
+          "class": "engine.registry.comp.KeyInputComp",
+          "data": {
+            "entity": 1
+          }
+        },
+        {
+          "class": "engine.registry.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 1
+          }
+        }
+      ],
+      "2": [
+        {
+          "class": "engine.registry.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 2
+          }
+        },
+        {
+          "class": "engine.registry.render.buff.image.ImageComp",
+          "data": {
+            "imageRenderConfig": {
+              "stretchImage": false,
+              "imageID": "Big_Del_Button_G",
+              "flags": 1003,
+              "layoutColNum": 6,
+              "layoutRowNum": 6,
+              "layoutCol": 5,
+              "layoutRow": 0
+            },
+            "entity": 2
+          }
+        },
+        {
+          "class": "engine.registry.comp.Container",
+          "data": {
+            "childMap": {},
+            "parent": 0,
+            "entity": 2
+          }
+        },
+        {
+          "class": "engine.registry.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 2
+          }
+        },
+        {
+          "class": "engine.registry.comp.gui.ButtonComp",
+          "data": {
+            "entity": 2
+          }
+        },
+        {
+          "class": "engine.registry.comp.MouseInputComp",
+          "data": {
+            "entity": 2
+          }
+        }
+      ],
+      "3": [
+        {
+          "class": "engine.registry.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 3
+          }
+        },
+        {
+          "class": "engine.registry.comp.MouseInputComp",
+          "data": {
+            "entity": 3
+          }
+        },
+        {
+          "class": "engine.registry.comp.Container",
+          "data": {
+            "childMap": {},
+            "parent": 0,
+            "entity": 3
+          }
+        },
+        {
+          "class": "engine.registry.comp.gui.ButtonComp",
+          "data": {
+            "entity": 3
+          }
+        },
+        {
+          "class": "engine.registry.render.buff.image.ImageComp",
+          "data": {
+            "imageRenderConfig": {
+              "stretchImage": false,
+              "imageID": "Big_Del_Button_G",
+              "flags": 1003,
+              "layoutColNum": 6,
+              "layoutRowNum": 6,
+              "layoutCol": 4,
+              "layoutRow": 0
+            },
+            "entity": 3
+          }
+        },
+        {
+          "class": "engine.registry.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 3
+          }
+        }
+      ],
+      "4": [
+        {
+          "class": "engine.registry.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 4
+          }
+        },
+        {
+          "class": "engine.registry.render.buff.image.ImageComp",
+          "data": {
+            "imageRenderConfig": {
+              "stretchImage": false,
+              "imageID": "Big_Del_Button_G",
+              "flags": 1003,
+              "layoutColNum": 6,
+              "layoutRowNum": 6,
+              "layoutCol": 3,
+              "layoutRow": 0
+            },
+            "entity": 4
+          }
+        },
+        {
+          "class": "engine.registry.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 4
+          }
+        },
+        {
+          "class": "engine.registry.comp.gui.ButtonComp",
+          "data": {
+            "entity": 4
+          }
+        },
+        {
+          "class": "engine.registry.comp.Container",
+          "data": {
+            "childMap": {},
+            "parent": 0,
+            "entity": 4
+          }
+        },
+        {
+          "class": "engine.registry.comp.MouseInputComp",
+          "data": {
+            "entity": 4
+          }
+        }
+      ],
+      "5": [
+        {
+          "class": "engine.registry.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 5
+          }
+        },
+        {
+          "class": "engine.registry.render.rect.RectComp",
+          "data": {
+            "rectRenderConfig": {
+              "rectColor": -434891756,
+              "strokeThinkness": 16,
+              "rectFlags": 2,
+              "flags": 1000,
+              "layoutColNum": 3,
+              "layoutRowNum": 3,
+              "layoutCol": 1,
+              "layoutRow": 1
+            },
+            "entity": 5
+          }
+        },
+        {
+          "class": "engine.registry.comp.Container",
+          "data": {
+            "childMap": {},
+            "parent": 0,
+            "entity": 5
+          }
+        },
+        {
+          "class": "engine.registry.comp.MouseInputComp",
+          "data": {
+            "entity": 5
+          }
+        },
+        {
+          "class": "engine.registry.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 5
+          }
+        }
+      ],
+      "6": [
+        {
+          "class": "engine.registry.comp.script.ScriptableComp",
+          "data": {
+            "scripts": [
+              {
+                "type": "engine.scene.panel.PanelCoreScript",
+                "data": {
+                  "entity": 6
+                }
+              }
+            ],
+            "entity": 6
+          }
+        }
+      ],
+      "7": [
+        {
+          "class": "engine.registry.render.buff.batch.BatchRenderComp",
+          "data": {
+            "batchRenderConfig": {
+              "tile_map": [
+                [
+                  {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "magnitude": 0.0
+                  },
+                  {
+                    "imageID": "Big_Del_Button_G",
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0,
+                      "magnitude": 0.0
+                    },
+                    "rotation": {
+                      "x": 0.0,
+                      "y": 0.0,
+                      "magnitude": 0.0
+                    },
+                    "opaciy": 1.0
+                  }
+                ],
+                [
+                  {
+                    "x": 2.0,
+                    "y": 1.0,
+                    "magnitude": 0.0
+                  },
+                  {
+                    "imageID": "Big_Del_Button_G",
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0,
+                      "magnitude": 0.0
+                    },
+                    "rotation": {
+                      "x": 0.0,
+                      "y": 0.0,
+                      "magnitude": 0.0
+                    },
+                    "opaciy": 1.0
+                  }
+                ],
+                [
+                  {
+                    "x": 2.0,
+                    "y": 2.0,
+                    "magnitude": 0.0
+                  },
+                  {
+                    "imageID": "Big_Del_Button_G",
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0,
+                      "magnitude": 0.0
+                    },
+                    "rotation": {
+                      "x": 0.0,
+                      "y": 0.0,
+                      "magnitude": 0.0
+                    },
+                    "opaciy": 1.0
+                  }
+                ]
+              ],
+              "tileSize": {
+                "x": 48.0,
+                "y": 32.0,
+                "magnitude": 0.0
+              },
+              "stretchImage": false,
+              "imageID": "Big_Del_Button_G",
+              "flags": 1003,
+              "layoutColNum": 2,
+              "layoutRowNum": 2,
+              "layoutCol": 1,
+              "layoutRow": 1
+            },
+            "entity": 7
+          }
+        },
+        {
+          "class": "engine.registry.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 7
+          }
+        },
+        {
+          "class": "engine.registry.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            },
+            "entity": 7
+          }
+        },
+        {
+          "class": "engine.registry.comp.Container",
+          "data": {
+            "childMap": {},
+            "parent": 1,
+            "entity": 7
+          }
+        }
+      ],
+      "8": [
+        {
+          "class": "engine.registry.comp.gui.panel.PanelCoreComp",
+          "data": {
+            "i": 0,
+            "entity": 8
+          }
+        }
+      ]
+    }
+  },
+  "scriptRegistry": {
+    "PanelScript": {
+      "type": "engine.scene.panel.PanelCoreScript",
+      "data": {
+        "entity": 1
+      }
+    }
+  },
+  "isRender": true
+}

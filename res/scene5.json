@@ -1,0 +1,139 @@
+{
+  "entityIdGenerator": 1,
+  "entityMap": {
+    "1": {
+      "name": "Button",
+      "components": {
+        "MouseInputComp": {
+          "type": "lumineweight.comp.MouseInputComp",
+          "data": {
+            "miListeners": [],
+            "mouseMouseListeners": [
+              null
+            ],
+            "mouseWheelListeners": []
+          }
+        },
+        "BufferedRenderComp": {
+          "type": "lumineweight.comp.BufferedRenderComp",
+          "data": {
+            "stretchImage": false,
+            "imageID": "Big_Del_Button",
+            "flags": 1003,
+            "layoutColNum": 2,
+            "layoutRowNum": 1,
+            "layoutCol": 1,
+            "layoutRow": 0
+          }
+        },
+        "ContainerComp": {
+          "type": "lumineweight.comp.ContainerComp",
+          "data": {}
+        },
+        "ButtonComp": {
+          "type": "lumineweight.comp.ButtonComp",
+          "data": {}
+        },
+        "TransformComp": {
+          "type": "lumineweight.comp.TransformComp",
+          "data": {
+            "transform": {
+              "range": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "magnitude": 0.0
+              },
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              }
+            }
+          }
+        },
+        "BoundsComp": {
+          "type": "lumineweight.comp.BoundsComp",
+          "data": {
+            "bounds": {
+              "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "magnitude": 0.0
+              },
+              "size": {
+                "x": 960.0,
+                "y": 540.0,
+                "magnitude": 0.0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "rooEntity": {
+    "name": "@Root",
+    "components": {
+      "BufferedRenderComp": {
+        "type": "lumineweight.comp.BufferedRenderComp",
+        "data": {
+          "stretchImage": false,
+          "imageID": "blue",
+          "flags": 1003,
+          "layoutColNum": 2,
+          "layoutRowNum": 1,
+          "layoutCol": 1,
+          "layoutRow": 0
+        }
+      },
+      "ContainerComp": {
+        "type": "lumineweight.comp.ContainerComp",
+        "data": {}
+      },
+      "TransformComp": {
+        "type": "lumineweight.comp.TransformComp",
+        "data": {
+          "transform": {
+            "range": {
+              "x": 0.0,
+              "y": 0.0,
+              "magnitude": 0.0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0,
+              "magnitude": 0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "magnitude": 0.0
+            }
+          }
+        }
+      },
+      "BoundsComp": {
+        "type": "lumineweight.comp.BoundsComp",
+        "data": {
+          "bounds": {
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "magnitude": 0.0
+            },
+            "size": {
+              "x": 960.0,
+              "y": 540.0,
+              "magnitude": 0.0
+            }
+          }
+        }
+      }
+    }
+  }
+}
