@@ -2,6 +2,7 @@ package engine.registry;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,11 +11,31 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import engine.registry.comp.Container;
+import engine.scene.AutoInstantiate;
 import engine.util.Logger;
 
 public class Registry implements Serializable {
+
+    @AutoInstantiate
+    transient private SecureRandom random = new SecureRandom();
+    @AutoInstantiate
+    transient private Set<Integer> seen = new HashSet<>();
     private final AtomicInteger entityIdGenerator = new AtomicInteger(0);
     private final HashMap<Integer, EntityMaterial> entityMap = new HashMap<>();
+
+    public int nextId() {
+        if (random == null) {
+            random = new SecureRandom(); // Ensure random is initialized
+        }
+        if (seen == null) {
+            seen = new HashSet<>(); // Ensure seen is initialized
+        }
+        int id;
+        do {
+            id = random.nextInt(Integer.MAX_VALUE); // or a smaller range if needed
+        } while (!seen.add(id)); // retries until a new unique one
+        return id;
+    }
 
     public Map<Integer, EntityMaterial> getEntityMap() {
         return entityMap;
@@ -25,7 +46,7 @@ public class Registry implements Serializable {
     }
 
     public Integer createEntity() {
-        final int id = entityIdGenerator.incrementAndGet();
+        final int id = nextId();
         entityMap.put(id, new EntityMaterial());
         return id;
     }
@@ -36,7 +57,7 @@ public class Registry implements Serializable {
      * @return The created entity int.
      */
     public Integer createVoliteEntity() {
-        final int id = entityIdGenerator.incrementAndGet();
+        final int id = nextId();
         EntityMaterial entityM = new EntityMaterial();
         entityM.setFlags(EntityMaterial.FLAG_DONT_SAVE);
         entityMap.put(id, entityM);
@@ -99,16 +120,25 @@ public class Registry implements Serializable {
         }
     }
 
-    public void unloadALLComponents() {
+    /**
+     * Prepares the registry for unloading.
+     * Removes all empty entities without any components.
+     * Also Removes all entities with the
+     * {@link EntityMaterial#FLAG_DONT_SAVE} flag set.
+     */
+    public void prepareforUnload() {
         for (int entity : new LinkedList<>(entityMap.keySet())) {
-            if (entityMap.get(entity) != null) {
-                for (Component comp : new HashSet<>(entityMap.get(entity).getComponents())) {
-                    comp.setEntity(entity);
-                    comp.onUnload(this);
-                }
+            // Remove Nulls from Container
+            // This is important for the Container to not have nulls
+            // in it when saving.
+            Container con = getComponent(entity, Container.class);
+            if (con != null) {
+                con.removeNulls();
             }
         }
-        // Removes all empty enities without any components.
+        entityMap.entrySet().removeIf((entry) -> {
+            return (entry.getValue().getFlags() & EntityMaterial.FLAG_DONT_SAVE) != 0;
+        });
         entityMap.entrySet().removeIf(entry -> entry.getValue().getComponents().isEmpty());
     }
 
@@ -116,6 +146,9 @@ public class Registry implements Serializable {
         T newComp = null;
         try {
 
+            if (entityMap.get(entity) == null || !entityMap.containsKey(entity)) {
+                return null;
+            }
             Set<Component> comps = entityMap.get(entity).getComponents();
             // if (comps == null) {
             // return null;
@@ -142,6 +175,11 @@ public class Registry implements Serializable {
     }
 
     public <T extends Component> T getComponent(Integer entity, Class<T> comp) {
+        if (entityMap.get(entity) == null || !entityMap.containsKey(entity)) {
+            // Logger.log(Logger.ERR, "Entity: '" + entity + "' is not in registry or is
+            // null");
+            return null;
+        }
         Set<Component> componentList = entityMap.get(entity).getComponents();
         if (componentList != null) {
             for (Component component : componentList) {
@@ -182,6 +220,10 @@ public class Registry implements Serializable {
     public <T extends Component> T requestComponentFrom(int entity, Class<T> tempComponent, Component comp) {
         if (!Contains(entity, tempComponent)) {
             T compsInstanace = addComponent(entity, tempComponent);
+            if (compsInstanace == null) {
+                Logger.log(Logger.ERR, "Failed to add component: " + tempComponent.getName() + " to entity: " + entity);
+                return null;
+            }
             compsInstanace.requestComponent = comp;
             return compsInstanace;
         }
@@ -189,8 +231,10 @@ public class Registry implements Serializable {
     }
 
     public boolean Contains(int entity, Class<? extends Component> TempComponent) {
-        if (entityMap.get(entity) == null) {
-            Logger.log(Logger.ERR, "Enity: '" + entity + "' is not in registry or is null");
+        if (entityMap.get(entity) == null || !entityMap.containsKey(entity)) {
+            // Logger.log(Logger.ERR, "Enity: '" + entity + "' is not in registry or is
+            // null");
+            return false;
         }
         Set<Component> components = new HashSet<>(entityMap.get(entity).getComponents());
         for (Component c : components) {
@@ -220,6 +264,13 @@ public class Registry implements Serializable {
 
     @SuppressWarnings("unchecked")
     public <T> T getComponentWithInterface(int entity, Class<T> interfaceclass) {
+        if (entityMap.get(entity) == null) {
+            // This gets triggered all the time, so I commented it out.
+            // It is not a problem, just a warning.
+            // Logger.log(Logger.ERR, "Entity: '" + entity + "' is not in registry or is
+            // null");
+            return null;
+        }
         Set<Component> components = entityMap.get(entity).getComponents();
         if (components != null) {
             for (Component c : components) {

@@ -10,6 +10,15 @@ public final class EntityMaterial implements java.io.Serializable {
 
     private HashSet<Component> components = new HashSet<>();
     private int flags = 0;
+    private String name = "";
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getFlags() {
         return flags;

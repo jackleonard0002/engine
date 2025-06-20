@@ -24,9 +24,4 @@ public class TransformComp extends Component {
     public void onLoad(Registry registry) {
         transform = new Transform();
     }
-
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
 }

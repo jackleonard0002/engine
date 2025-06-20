@@ -31,11 +31,6 @@ public class RectComp extends Component implements HasRenderer<RectRenderer> {
     }
 
     @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public RectRenderer getRenderer() {
         return rectRenderer;
     }

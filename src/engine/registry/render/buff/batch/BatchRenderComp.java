@@ -30,11 +30,6 @@ public final class BatchRenderComp extends Component implements HasRenderer<Batc
     }
 
     @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public BatchRenderer getRenderer() {
         return batchRenderer;
     }

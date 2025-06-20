@@ -55,11 +55,6 @@ public class ButtonComp extends Component {
     }
 
     @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public void onReset(Registry registry) {
         imageComp = registry.requestComponentFrom(getEntity(), ImageComp.class, this);
         imageRenderer = imageComp.getRenderer();

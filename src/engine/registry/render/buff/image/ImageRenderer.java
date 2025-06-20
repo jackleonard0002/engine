@@ -11,6 +11,7 @@ public final class ImageRenderer extends BufferedRenderer<ImageRendererConfig> {
                 setCachedImage(Assets.getImage(getRenderConfig().getImageID()));
             });
         });
+        interFun();
 
     }
 }

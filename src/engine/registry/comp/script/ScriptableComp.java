@@ -31,11 +31,6 @@ public class ScriptableComp extends engine.registry.Component {
         }
     }
 
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
     public void onTick(float deltaT) {
         scripts.forEach(s -> s.onTick(deltaT));
     }

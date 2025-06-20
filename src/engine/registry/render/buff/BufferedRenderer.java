@@ -32,6 +32,7 @@ public class BufferedRenderer<T extends BufferedRenderConfig> extends Renderer<T
             });
             getRunnableStack().add(() -> {
                 // cachedImage = Assets.getImage(getRenderConfig().getImageID());
+                setCachedImage(Assets.getImage(getRenderConfig().getImageID()));
                 if (cachedImage == null)
                     return;
                 if (!getRenderConfig().isStretchImage()) {

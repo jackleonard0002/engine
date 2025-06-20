@@ -19,6 +19,16 @@ import engine.util.Logger;
 import engine.util.Transform;
 import engine.util.Vec2f;
 
+/**
+ * Renderer is the base class for all renderers in the engine.
+ * It provides a framework for rendering entities with configurable
+ * rendering options.
+ * <p>
+ * It supports various flags to control rendering behavior, such as
+ * maintaining aspect ratio, drawing outlines, changing coordinate origin,
+ * enabling layout grids, and following parent entities.
+ * 
+ */
 public abstract class Renderer<T extends RenderConfig> extends engine.registry.Process {
 
     /**
@@ -117,7 +127,7 @@ public abstract class Renderer<T extends RenderConfig> extends engine.registry.P
             BoundsComp boundsComp = entityRegistry.requestComponentFrom(getEntity(), BoundsComp.class, null);
             bounds = boundsComp.getBounds();
             boundsComp.getBounds().getEventListener().addListener((bounds) -> {
-                Logger.log("Bounds change");
+                // Logger.log("Bounds change");
                 bounds = boundsComp.getBounds();
                 interFun();
             });
@@ -147,6 +157,7 @@ public abstract class Renderer<T extends RenderConfig> extends engine.registry.P
             return;
 
         for (int child : containerEntities) {
+            // Logger.log(">>>>>: " + containerEntities.toString());
             HasRenderer<?> hasRenderer = containerComp.getRegistry().getComponentWithInterface(child,
                     HasRenderer.class);
             if (hasRenderer == null)
@@ -166,6 +177,11 @@ public abstract class Renderer<T extends RenderConfig> extends engine.registry.P
 
     /// Render Callback ///
 
+    /**
+     * A stack of render callbacks that can be used to add custom rendering
+     * functionality to the renderer. Callbacks are executed in the order they
+     * are added.
+     */
     @AutoInstantiate
     transient private ConsumerStack<Graphics2D> renderCallBacks = new ConsumerStack<>();
 
@@ -173,7 +189,17 @@ public abstract class Renderer<T extends RenderConfig> extends engine.registry.P
         return renderCallBacks;
     }
 
-    public void onRender(Graphics2D g2d) {
+    /**
+     * This method is called to render the entity using the provided Graphics2D
+     * object. It executes all the render callbacks and draws an outline if the
+     * FLAG_DRAW_OUTLINE flag is set in the render configuration.
+     * 
+     * @param g2d the Graphics2D object used for rendering
+     * @see #getRenderCallBacks()
+     * @see RenderConfig
+     * @see #FLAG_DRAW_OUTLINE
+     */
+    public final void onRender(Graphics2D g2d) {
         // interFun();
         // Logger.log("Rendering in render");
         renderCallBacks.onAccept(g2d);

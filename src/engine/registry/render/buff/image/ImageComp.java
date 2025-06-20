@@ -15,6 +15,7 @@ public class ImageComp extends Component implements HasRenderer<ImageRenderer> {
         renderer.setEntity(getEntity());
         renderer.reset(registry);
         renderer.setRenderConfig(imageRenderConfig);
+        renderer.interFun();
     }
 
     @Override
@@ -23,12 +24,6 @@ public class ImageComp extends Component implements HasRenderer<ImageRenderer> {
         renderer.setEntity(getEntity());
         renderer.reset(registry);
         renderer.setRenderConfig(imageRenderConfig);
-        renderer.interFun();
-    }
-
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
     }
 
     @Override

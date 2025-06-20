@@ -49,6 +49,7 @@ public class Scene implements Serializable {
 
     private static Scene liveScene;
     transient private static Canvas cover;
+    transient private static int rootEntity;
 
     public static Canvas getCover() {
         return cover;
@@ -70,6 +71,7 @@ public class Scene implements Serializable {
     public static void writeSceneToBIN(String filepath) {
         Logger.log(Logger.CYA, " (W)Began to write " + filepath);
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filepath))) {
+            liveScene.registry.prepareforUnload();
             out.writeObject(liveScene);
             Logger.log(Logger.CYA, " (W)Sucessfully Wrote to " + filepath);
         } catch (IOException e) {
@@ -90,7 +92,7 @@ public class Scene implements Serializable {
     }
 
     public static void writeSceneToJSON(String filepath) {
-        Logger.log(Logger.CYA, " (R) Began to read " + filepath);
+        Logger.log(Logger.CYA, " (W) Began to write " + filepath);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.setPrettyPrinting().create();
         builder.registerTypeAdapter(Component.class, new ComponentAdapter())
@@ -104,7 +106,7 @@ public class Scene implements Serializable {
         builder.registerTypeAdapter(Script.class, new ScriptAdapter(gson));
         gson = builder.setPrettyPrinting().enableComplexMapKeySerialization().create();
         try (FileWriter writer = new FileWriter(filepath)) {
-            liveScene.registry.unloadALLComponents();
+            liveScene.registry.prepareforUnload();
             gson.toJson(liveScene, writer);
             Logger.log(Logger.CYA, " (W) Sucessfully Wrote to " + filepath);
         } catch (IOException e) {
@@ -137,55 +139,70 @@ public class Scene implements Serializable {
         return null;
     }
 
+    /**
+     * Swaps the current live scene with the provided scene.
+     * This method loads all components of the new scene, sets the root entity's
+     * bounds, and updates the cover canvas with mouse and key input listeners.
+     * 
+     * @param scene The new scene to swap to.
+     */
     public static void swapScenes(Scene scene) {
+        liveScene.isRender = false;
         scene.registry.loadALLComponents();
-        // liveScene.isRender = false;s
-        BoundsComp rootBounds = scene.registry.addComponent(1, BoundsComp.class);
-        // br.setImageID("blue");
-        ImageComp br = scene.registry.requestComponentFrom(1, ImageComp.class, null);
-        br.getRenderer().getRenderConfig().setImageID("blue");
+        scene.registry.getEntityMap().forEach((id, entity) -> {
+            if (entity.getName().equals("@RootEntity")) {
+                rootEntity = id;
+                Logger.log(Logger.WARM, "@RootEntity ID: " + id);
+                BoundsComp rootBounds = scene.registry.addComponent(id, BoundsComp.class);
+                ImageComp br = scene.registry.requestComponentFrom(id, ImageComp.class, null);
+                br.getRenderer().getRenderConfig().setImageID("blue");
+                getCover().addComponentListener(new ComponentListener() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        // Logger.log("Window Resized");
+                        Canvas cover = getCover();
+                        Point point = cover.getLocation();
+                        rootBounds.getBounds().setPosition(new Vec2f((float) point.getX(), (float) point.getY()));
+                        rootBounds.getBounds().setSize(new Vec2f((float) cover.getWidth(), (float) cover.getHeight()));
+                        Logger.log("Width: " + rootBounds.getBounds().getSize().x);
+                    }
 
-        getCover().addComponentListener(new ComponentListener() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                // Logger.log("Window Resized");
-                Canvas cover = getCover();
-                Point point = cover.getLocation();
-                rootBounds.getBounds().setPosition(new Vec2f((float) point.getX(), (float) point.getY()));
-                rootBounds.getBounds().setSize(new Vec2f((float) cover.getWidth(), (float) cover.getHeight()));
-                Logger.log("Width: " + rootBounds.getBounds().getSize().x);
+                    @Override
+                    public void componentMoved(ComponentEvent e) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void componentShown(ComponentEvent e) {
+                        // TODO Auto-generated method stub
+                    }
+
+                    @Override
+                    public void componentHidden(ComponentEvent e) {
+                        // TODO Auto-generated method stub
+                    }
+
+                });
+                getCover().addMouseMotionListener(scene.registry.requestComponentFrom(id, MouseInputComp.class, null));
+                getCover().addKeyListener(scene.registry.requestComponentFrom(id, KeyInputComp.class, null));
+
             }
-
-            @Override
-            public void componentMoved(ComponentEvent e) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void componentShown(ComponentEvent e) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void componentHidden(ComponentEvent e) {
-                // TODO Auto-generated method stub
-            }
-
         });
-        getCover().addMouseMotionListener(scene.registry.requestComponentFrom(1, MouseInputComp.class, null));
-        getCover().addKeyListener(scene.registry.requestComponentFrom(1, KeyInputComp.class, null));
+        // br.setImageID("blue");
+        // br.getRenderer().getRenderConfig().setImageID("blue");
+
         liveScene = scene;
-        // liveScene.isRender = true;
+        liveScene.isRender = true;
     }
 
     private Registry registry = new Registry();
     private HashMap<String, Script> scriptRegistry = new HashMap<>();
-    transient private int rootEntity;
     private boolean isRender = true;
 
     public void initialize() {
         scriptRegistry.put("PanelScript", new PanelCoreScript());
         rootEntity = registry.createEntity();
+        registry.getEntityMap().get(rootEntity).setName("@RootEntity");
         registry.addComponent(rootEntity, BoundsComp.class);
         registry.addComponent(rootEntity, MouseInputComp.class);
         registry.addComponent(rootEntity, KeyInputComp.class);
@@ -268,26 +285,30 @@ public class Scene implements Serializable {
         Container rootContainer = registry.getComponent(rootEntity, Container.class);
         // rootContainer.addChild(panelCore);
 
-        int batchRenderTest = registry.createEntity();
-        BatchRenderComp batchRenderComp = registry.addComponent(batchRenderTest, BatchRenderComp.class);
-        batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(1, 1), new RenderBatch("Big_Del_Button_G"));
-        batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(2, 1), new RenderBatch("Big_Del_Button_G"));
-        batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(2, 2), new RenderBatch("Big_Del_Button_G"));
-        batchRenderComp.getRenderer().bake();
+        // int batchRenderTest = registry.createEntity();
+        // BatchRenderComp batchRenderComp = registry.addComponent(batchRenderTest,
+        // BatchRenderComp.class);
+        // batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(1, 1), new
+        // RenderBatch("Big_Del_Button_G"));
+        // batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(2, 1), new
+        // RenderBatch("Big_Del_Button_G"));
+        // batchRenderComp.getBatchRenderConfig().putRenderBatch(new Vec2f(2, 2), new
+        // RenderBatch("Big_Del_Button_G"));
+        // batchRenderComp.getRenderer().bake();
 
         int panelTest = registry.createEntity();
         registry.addComponent(panelTest, PanelCoreComp.class);
 
-        rootContainer.putChild("batchRenderTest", batchRenderTest);
+        // rootContainer.putChild("batchRenderTest", batchRenderTest);
         rootContainer.putChild("panelCoreComp", panelTest);
 
         Timer.start();
         writeSceneToJSON("res/scene0.json");
         readSceneFromJSON("res/scene0.json");
-        writeSceneToJSON("res/scene1.json");
+        // writeSceneToJSON("res/scene1.json");
         writeSceneToBIN("res/scene2.bin");
         readSceneFromBIN("res/scene2.bin");
-        writeSceneToJSON("res/scene3.json");
+        // writeSceneToJSON("res/scene3.json");
         Timer.stop();
         Logger.log(Logger.EXOT, "######### Loading Took " + Timer.getElapsedMilliseconds() + " ms #########");
         // readSceneFromJSON("res/scene3.json");
@@ -295,12 +316,27 @@ public class Scene implements Serializable {
 
     public void onRender(Graphics2D g2d) {
         if (isRender) {
-            onRenderEntityTree(g2d, registry, 1, 0);
+            onRenderEntityTree(g2d, registry, rootEntity, 0);
         }
     }
 
+    /**
+     * Recursively renders the entity tree starting from the given entity.
+     * This method traverses the entity's renderer and its children, rendering each
+     * entity's renderer.
+     * 
+     * @param g2d            the Graphics2D context to render on
+     * @param entityRegistry the registry containing the entities and their
+     *                       components
+     * @param entity         the entity to start rendering from
+     * @param depth          the current depth in the entity tree (used for
+     *                       debugging)
+     */
     private void onRenderEntityTree(Graphics2D g2d, Registry entityRegistry, int entity, int depth) {
         // Logger.log("Render Tree Depth: " + ++depth);
+        // Logger.log("entity: " + entity);
+        if (!entityRegistry.getEntityMap().containsKey(entity))
+            return;
         HasRenderer<?> hasRenderer = entityRegistry.getComponentWithInterface(entity, HasRenderer.class);
         if (hasRenderer == null)
             return;

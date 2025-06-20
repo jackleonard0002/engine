@@ -55,11 +55,6 @@ public class MouseInputComp extends Component implements MouseMotionListener,
         containerX = container.getChildren();
     }
 
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
     public void addMouseListener(MouseListener ml) {
         miListeners.add(ml);
     }

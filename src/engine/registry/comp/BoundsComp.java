@@ -21,9 +21,4 @@ public class BoundsComp extends Component {
     public void onLoad(Registry registry) {
         // bounds = new Bounds();
     }
-
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
 }

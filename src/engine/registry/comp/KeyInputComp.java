@@ -35,11 +35,6 @@ public class KeyInputComp extends Component implements KeyListener {
         childEntities = container.getChildren();
     }
 
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
     public void addKeyListener(KeyListener listener) {
         keyListeners.add(listener);
     }

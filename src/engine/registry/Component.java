@@ -61,16 +61,4 @@ public abstract class Component implements java.io.Serializable {
      */
     public abstract void onLoad(Registry registry);
 
-    /**
-     * Gets called when instance is being unloaded from file
-     * Allows for RAM only entities.
-     * If you want to create entities in this class just
-     * make sure you call {@link EntityRegistry#destroyEntity(int entityID)
-     * destroyEntity()}
-     * here.
-     * 
-     * @param entityRegistry
-     */
-    public abstract void onUnload(Registry registry);
-
 }

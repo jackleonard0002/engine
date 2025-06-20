@@ -38,9 +38,4 @@ public class RawRenderComp extends Component implements HasRenderer<RawRenderer>
         rawRenderer.setRenderConfig(rawRenderConfig);
     }
 
-    @Override
-    public void onUnload(Registry registry) {
-        // TODO Auto-generated method stub
-    }
-
 }
