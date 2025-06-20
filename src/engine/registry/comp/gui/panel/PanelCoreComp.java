@@ -36,7 +36,7 @@ public class PanelCoreComp extends Component {
         renderConfig.setLayoutCol(1);
         renderConfig.setLayoutRow(1);
 
-        i = entityRegistry.createEntity();
+        i = entityRegistry.createVoliteEntity();
         // BoundsComp boubds = entityRegistry.addComponent(i, BoundsComp.class);
     }
 

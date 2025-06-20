@@ -18,7 +18,7 @@ import engine.scene.AutoInstantiate;
 public class ButtonComp extends Component {
 
     transient private MouseInputComp mouseInputComp;
-    transient private ImageRendererConfig imageRendererConfig;
+    // transient private ImageRendererConfig imageRendererConfig;
     transient private ImageRenderer imageRenderer;
     transient private ImageComp imageComp;
 
@@ -67,7 +67,7 @@ public class ButtonComp extends Component {
             // Logger.log("First Class: " +
             // imageRenderer.getRenderConfig().getClass().getName());
             if (imageRenderer != null && imageRenderer.getRenderConfig() instanceof ImageRendererConfig) {
-                imageRendererConfig = imageRenderer.getRenderConfig();
+                imageRenderer.getRenderConfig();
                 // Logger.log("Second Class: " + imageRendererConfig.getClass().getName());
             }
         }

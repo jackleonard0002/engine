@@ -1,5 +1,6 @@
 package engine.registry;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import engine.registry.comp.Container;
 import engine.util.Logger;
 
-public class Registry {
+public class Registry implements Serializable {
     private final AtomicInteger entityIdGenerator = new AtomicInteger(0);
     private final HashMap<Integer, EntityMaterial> entityMap = new HashMap<>();
 

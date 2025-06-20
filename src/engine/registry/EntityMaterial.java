@@ -3,7 +3,7 @@ package engine.registry;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class EntityMaterial {
+public final class EntityMaterial implements java.io.Serializable {
 
     public static final int FLAG_DONT_SAVE = 1 << 1;
     public static final int FLAG_NOT_EDITABLE = 1 << 2;
